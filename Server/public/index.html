@@ -12,7 +12,6 @@
     <form id="searchForm">
         <label for="enr">Enter Student ENR:</label>
         <input type="text" id="enr" name="enr" required>
-        <!-- Pass the event to validateInput so preventDefault() works -->
         <button type="submit" onclick="validateInput(event)">Search</button>
     </form>
 
@@ -21,7 +20,7 @@
 
     <script>
         async function validateInput(event) {
-            // Prevent the form from submitting normally
+            
             event.preventDefault();
 
             const input = document.getElementById("enr").value.trim();
@@ -48,8 +47,7 @@
                     result[patternName] = input;
                 }
             }
-
-            console.log(result);
+ 
 
             // If at least one pattern matches, send the result object in the request body
             if (Object.keys(result).length > 0) {
