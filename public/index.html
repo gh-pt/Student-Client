@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Student Data</title>
+</head>
+
+<body>
+    <h2>Search Student by ENR</h2>
+    <form id="searchForm">
+        <label for="enr">Enter Student ENR:</label>
+        <input type="text" id="enr" name="enr" required>
+        <!-- Pass the event to validateInput so preventDefault() works -->
+        <button type="submit" onclick="validateInput(event)">Search</button>
+    </form>
+
+    <h3>Student Details</h3>
+    <pre id="result"></pre>
+
+    <script>
+        async function validateInput(event) {
+            // Prevent the form from submitting normally
+            event.preventDefault();
+
+            const input = document.getElementById("enr").value.trim();
+            const resultDiv = document.getElementById('result');
+
+            // Regex patterns
+            const regexPatterns = {
+                email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                phone: /^\+?[0-9]{10,15}$/,
+                // Any combination of letters/digits before "-ENRNO" followed by one or more digits
+                enrno: /^[A-Za-z0-9]+-ENRNO\d+$/,
+                // Any combination of letters/digits before "-APPNO" followed by one or more digits
+                appno: /^[A-Za-z0-9]+-APPNO\d+$/,
+                // EN-number: starts with "EN" followed by one or more digits
+                enNumber: /^EN\d+$/,
+                // Name: only alphabetic characters and spaces
+                name: /^[a-zA-Z\s]+$/
+            };
+
+            // Create a result object with matching patterns as properties
+            const result = {};
+            for (const [patternName, regex] of Object.entries(regexPatterns)) {
+                if (regex.test(input)) {
+                    result[patternName] = input;
+                }
+            }
+
+            console.log(result);
+
+            // If at least one pattern matches, send the result object in the request body
+            if (Object.keys(result).length > 0) {
+                try {
+                    const response = await fetch(`http://localhost:3000/byENR`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ result })
+                    });
+
+                    if (!response.ok) throw new Error('Student not found');
+
+                    const data = await response.json();
+                    resultDiv.textContent = JSON.stringify(data, null, 2);
+                } catch (error) {
+                    resultDiv.textContent = `Error: ${error.message}`;
+                }
+            } else {
+                resultDiv.textContent = 'Invalid input';
+            }
+        }
+    </script>
+</body>
+
+</html>
