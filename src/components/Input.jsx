@@ -45,7 +45,7 @@ export default function Input() {
   async function getData(input) {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_HOST_URL_LOCAL}/byENR`,
+        `${import.meta.env.VITE_HOST_URL}/byENR`,
         {
           result: input,
         }
