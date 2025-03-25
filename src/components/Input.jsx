@@ -57,7 +57,7 @@ export default function Input() {
         alert("Please enter a valid input");
         return;
       }
-      getData({ [searchType]: input.trim() });
+      getData({ [searchType]: [input.trim()] });
     }
   }
 
