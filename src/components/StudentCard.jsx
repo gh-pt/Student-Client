@@ -44,6 +44,10 @@ const StudentCard = ({ student }) => {
       <p className="text-sm text-gray-600">Grade: {student["Grade Name"]}</p>
       <p className="text-sm text-gray-600">Division: {student.Division}</p>
       <p className="text-sm text-gray-600">DOB: {student["Student DOB"]}</p>
+      <p className="text-sm text-gray-600">Course: {student["Course Name"]}</p>
+      <p className="text-sm text-gray-600">Brand: {student["Brand Name"]}</p>
+      <p className="text-sm text-gray-600">Shift: {student["Shift Name"]}</p>
+
       <div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
         {[
           "Student EduLearn ENR",
