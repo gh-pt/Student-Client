@@ -47,6 +47,7 @@ const StudentCard = ({ student }) => {
       <p className="text-sm text-gray-600">Course: {student["Course Name"]}</p>
       <p className="text-sm text-gray-600">Brand: {student["Brand Name"]}</p>
       <p className="text-sm text-gray-600">Shift: {student["Shift Name"]}</p>
+      <p className="text-sm text-gray-600">Stream: {student["Stream Name"]}</p>
 
       <div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
         {[
