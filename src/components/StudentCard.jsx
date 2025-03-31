@@ -60,7 +60,7 @@ const StudentCard = ({ student }) => {
         ].map((field, index) => (
           <div key={index} className="text-sm font-semibold text-gray-700">
             <p className="text-sm text-gray-500 mr-2">
-              {field.replace("Student ", "").replace("EduLearn ", "")}:
+              {field.replace("Student EduLearn ","Old ").replace("Student ", "").replace("EduLearn ", "")}:
             </p>
             <div className="flex items-center justify-between">
               <p>{student[field]}</p>
