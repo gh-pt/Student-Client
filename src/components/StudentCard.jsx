@@ -40,14 +40,17 @@ const StudentCard = ({ student }) => {
           </button>
         </h3>
       </div>
-      <p className="text-sm text-gray-600">School: {student["School Name"]}</p>
-      <p className="text-sm text-gray-600">Grade: {student["Grade Name"]}</p>
-      <p className="text-sm text-gray-600">Division: {student.Division}</p>
-      <p className="text-sm text-gray-600">DOB: {student["Student DOB"]}</p>
-      <p className="text-sm text-gray-600">Course: {student["Course Name"]}</p>
-      <p className="text-sm text-gray-600">Brand: {student["Brand Name"]}</p>
-      <p className="text-sm text-gray-600">Shift: {student["Shift Name"]}</p>
-      <p className="text-sm text-gray-600">Stream: {student["Stream Name"]}</p>
+      <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 my-6">
+        <p><strong>School:</strong> {student["School Name"]}</p>
+        <p><strong>Grade:</strong> {student["Grade Name"]}</p>
+        <p><strong>Division:</strong> {student.Division}</p>
+        <p><strong>DOB:</strong> {student["Student DOB"]}</p>
+        <p><strong>Board:</strong> {student["Board Name"]}</p>
+        <p><strong>Course:</strong> {student["Course Name"]}</p>
+        <p><strong>Brand:</strong> {student["Brand Name"]}</p>
+        <p><strong>Shift:</strong> {student["Shift Name"]}</p>
+        <p><strong>Stream:</strong> {student["Stream Name"]}</p>
+      </div>
 
       <div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
         {[
