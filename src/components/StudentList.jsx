@@ -99,7 +99,7 @@ const StudentList = ({ students }) => {
 			)}
 
 			{/* Render Student Cards */}
-			<div className="flex items-center sm:flex-row flex-col gap-4 flex-wrap">
+			<div className="flex items-center sm:flex-row flex-col gap-2 flex-wrap">
 				{students.map((student) => (
 					<StudentCard key={student["Student ID"]} student={student} />
 				))}

@@ -39,7 +39,7 @@ const StudentCard = ({ student }) => {
 					</button>
 				</h3>
 			</div>
-			<div className="grid grid-cols-2 gap-3 text-sm text-gray-700 my-6">
+			<div className="grid grid-cols-2 gap-x-5 gap-y-3 text-sm text-gray-700 my-6">
 				<p>
 					<strong>School:</strong> {student["School Name"]}
 				</p>
