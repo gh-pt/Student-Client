@@ -56,7 +56,6 @@ export default function Input() {
 			}
 
 			if (Object.keys(validInputs).length > 0) {
-				console.log(validInputs);
 				getData(validInputs);
 			} else {
 				alert("Invalid input");
