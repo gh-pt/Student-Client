@@ -44,6 +44,9 @@ const StudentCard = ({ student }) => {
 					<strong>School:</strong> {student["School Name"]}
 				</p>
 				<p>
+					<strong>Academic Year:</strong> {student["AY YR"]}
+				</p>
+				<p>
 					<strong>Grade:</strong> {student["Grade Name"]}
 				</p>
 				<p>

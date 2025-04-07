@@ -86,12 +86,12 @@ export default function Input() {
 			<h2 className="text-2xl font-bold mb-4">Search Student - Guardian</h2>
 			<form>
 				{/* Dropdown to select search type */}
-				<div className="w-full flex items-center gap-2">
+				<div className="w-full flex flex-col sm:flex-row sm:items-center gap-2">
 					<select
 						id="searchType"
 						value={searchType}
 						onChange={(e) => setSearchType(e.target.value)}
-						className="p-2 border rounded w-[12rem] text-black outline-none h-full">
+						className="p-2 border rounded w-fit text-black outline-none h-full">
 						<option value="custom">Custom</option>
 						<option value="studentId">Student ID</option>
 						<option value="guardianGlobalNo">Global No</option>
@@ -101,7 +101,7 @@ export default function Input() {
 					{/* Wrapper for tooltip and input field */}
 					<div className="relative w-full group">
 						{/* Tooltip (appears on hover of input or icon) */}
-						<span className="absolute left-6 top-[60px] w-[350px] bg-gray-800 text-white text-xs p-2 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+						<span className="absolute left-6 top-[60px] w-fit bg-gray-800 text-white text-xs p-2 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
 							{tooltips[searchType]}
 						</span>
 
@@ -123,28 +123,30 @@ export default function Input() {
 							</svg>
 						</div>
 
-						{/* Search Input */}
-						<input
-							type="search"
-							id="search"
-							value={input}
-							className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Enter search term (comma-separated)"
-							onChange={(e) => setInput(e.target.value)}
-						/>
+						<div className="flex justify-between items-center gap-1 w-full h-[3rem] px-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+							{/* Search Input */}
+							<input
+								type="search"
+								id="search"
+								value={input}
+								className="w-[85%] h-full text-sm bg-transparent outline-none bg-gray-50 px-1 overflow-auto dark:bg-gray-700 dark:border-gray-600"
+								placeholder="Enter search term (comma-separated)"
+								onChange={(e) => setInput(e.target.value)}
+							/>
 
-						{/* Search Button */}
-						<button
-							type="submit"
-							disabled={input.trim().length === 0}
-							className={`text-white absolute end-2.5 bottom-2.5 ${
-								input.trim().length === 0
-									? "bg-blue-400 cursor-not-allowed"
-									: "bg-blue-700 hover:bg-blue-800"
-							} focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
-							onClick={(e) => validateInput(e)}>
-							Search
-						</button>
+							{/* Search Button */}
+							<button
+								type="submit"
+								disabled={input.trim().length === 0}
+								className={`w-fit  text-white ${
+									input.trim().length === 0
+										? "bg-blue-400 cursor-not-allowed"
+										: "bg-blue-700 hover:bg-blue-800"
+								} focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+								onClick={(e) => validateInput(e)}>
+								Search
+							</button>
+						</div>
 					</div>
 				</div>
 			</form>

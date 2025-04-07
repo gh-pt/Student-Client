@@ -47,7 +47,7 @@ const StudentList = ({ students }) => {
 	};
 
 	return (
-		<div className="p-4">
+		<div className="p-4 w-full">
 			{/* Dropdown for selecting filter option */}
 			<label
 				htmlFor="searchType"
@@ -59,9 +59,9 @@ const StudentList = ({ students }) => {
 				value={selectedOption}
 				onChange={handleSelection}
 				className="mb-4 p-2 border rounded w-full text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
-				<option value="studentID">Student ID</option>
-				<option value="guardianID">Guardian ID</option>
-				<option value="globalNo">Global No</option>
+				<option value="studentID" className="w-fit">Student ID</option>
+				<option value="guardianID" className="w-fit">Guardian ID</option>
+				<option value="globalNo" className="w-fit">Global No</option>
 			</select>
 
 			{/* Display extracted data */}
