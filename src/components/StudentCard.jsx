@@ -12,6 +12,15 @@ const StudentCard = ({ student }) => {
 		});
 	};
 
+	const DOB = new Date(student["Student DOB"]);
+	const formattedDOB = DOB.toLocaleDateString("en-GB", {
+		day: "numeric",
+		month: "2-digit",
+		year: "numeric",
+	}).replace(/\//g, "-");
+
+	const academicYear = student["AY YR"] === 25 ? "2024-25" : "2025-26";
+
 	return (
 		<div className="w-full sm:max-w-[600px] mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
 			<div className="flex items-center justify-between mb-2">
@@ -44,7 +53,7 @@ const StudentCard = ({ student }) => {
 					<strong>School:</strong> {student["School Name"]}
 				</p>
 				<p>
-					<strong>Academic Year:</strong> {student["AY YR"]}
+					<strong>Academic Year:</strong> {academicYear}
 				</p>
 				<p>
 					<strong>Grade:</strong> {student["Grade Name"]}
@@ -53,7 +62,7 @@ const StudentCard = ({ student }) => {
 					<strong>Division:</strong> {student.Division}
 				</p>
 				<p>
-					<strong>DOB:</strong> {student["Student DOB"]}
+					<strong>DOB:</strong> {formattedDOB}
 				</p>
 				<p>
 					<strong>Board:</strong> {student["Board Name"]}
