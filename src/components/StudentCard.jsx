@@ -79,6 +79,12 @@ const StudentCard = ({ student }) => {
 				<p>
 					<strong>Stream:</strong> {student["Stream Name"]}
 				</p>
+				<p>
+					<strong>House:</strong> {student["House"]}
+				</p>
+				<p>
+					<strong>Student Type:</strong> {student["Student Type"]}
+				</p>
 			</div>
 
 			<div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
