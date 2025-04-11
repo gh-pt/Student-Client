@@ -85,6 +85,9 @@ const StudentCard = ({ student }) => {
 				<p>
 					<strong>Student Type:</strong> {student["Student Type"]}
 				</p>
+				<p>
+					<strong>LC Type:</strong> {student["Lc Type"]}
+				</p>
 			</div>
 
 			<div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
