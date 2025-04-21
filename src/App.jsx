@@ -3,13 +3,13 @@ import StudentList from "./components/StudentList";
 import { AppState } from "./context/context";
 
 function App() {
-  const { students } = AppState();
-  return (
-    <>
-      <Input />
-      <StudentList students={students} />
-    </>
-  );
+	const { students, missingItems } = AppState();
+	return (
+		<>
+			<Input />
+			<StudentList students={students} missingItems={missingItems} />
+		</>
+	);
 }
 
 export default App;

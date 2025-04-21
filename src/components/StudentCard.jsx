@@ -12,6 +12,28 @@ const StudentCard = ({ student }) => {
 		});
 	};
 
+	const copyGuardianCredentials = () => {
+		const formatted = ["Please use below credentials:"];
+		const seen = new Set();
+
+		student.Guardians.forEach((g) => {
+			if (g.Email && g.Password) {
+				const key = `${g.Email}:${g.Password}`;
+				if (!seen.has(key)) {
+					seen.add(key);
+					formatted.push(`${g.Relationship}: ${g.Email} / ${g.Password}`);
+				}
+			}
+		});
+
+		if (formatted.length === 1) {
+			formatted.push("No unique guardian credentials found.");
+		}
+
+		const text = formatted.join("\n");
+		copyToClipboard(text, "Guardian Credentials");
+	};
+
 	const DOB = new Date(student["Student DOB"]);
 	const formattedDOB = DOB.toLocaleDateString("en-GB", {
 		day: "numeric",
@@ -127,7 +149,19 @@ const StudentCard = ({ student }) => {
 				))}
 			</div>
 			<div className="mt-4">
-				<h3 className="text-lg font-semibold text-gray-800">Guardians</h3>
+				<div className="flex justify-between items-center mb-2">
+					<h3 className="text-lg font-semibold text-gray-800">Guardians:</h3>
+					<button
+						onClick={copyGuardianCredentials}
+						className="text-sm bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 flex items-center gap-1">
+						{copiedField === "Guardian Credentials" ? (
+							<RiCheckboxCircleFill className="text-white" size={16} />
+						) : (
+							<RiClipboardLine className="text-white" size={16} />
+						)}
+						Copy Credentials
+					</button>
+				</div>
 				{student.Guardians.map((guardian, index) => (
 					<div
 						key={index}

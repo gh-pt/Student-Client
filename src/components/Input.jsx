@@ -5,7 +5,7 @@ import { AppState } from "../context/context";
 export default function Input() {
 	const [input, setInput] = useState("");
 	const [searchType, setSearchType] = useState("custom"); // Default to regex-based search
-	const { setStudents } = AppState();
+	const { setStudents, setMissingItems } = AppState();
 
 	// Regex patterns
 	const regexPatterns = {
@@ -56,7 +56,7 @@ export default function Input() {
 			}
 
 			if (Object.keys(validInputs).length > 0) {
-				getData(validInputs);
+				getData(validInputs, inputs); // Pass original input terms
 			} else {
 				alert("Invalid input");
 			}
@@ -66,14 +66,67 @@ export default function Input() {
 		}
 	}
 
-	async function getData(input) {
+	// async function getData(input) {
+	// 	try {
+	// 		const response = await axios.post(
+	// 			`${import.meta.env.VITE_HOST_URL}/student/byENR`,
+	// 			{ result: input }
+	// 		);
+
+	// 		setStudents(response.data);
+	// 	} catch (error) {
+	// 		alert(error.response?.data?.message || "An error occurred");
+	// 		console.log(error);
+	// 	}
+	// }
+
+	// Modify getData to receive full input list
+	async function getData(inputObj, originalInputs = []) {
 		try {
 			const response = await axios.post(
 				`${import.meta.env.VITE_HOST_URL}/student/byENR`,
-				{ result: input }
+				{ result: inputObj }
 			);
 
-			setStudents(response.data);
+			const matchedStudents = response.data;
+			setStudents(matchedStudents);
+
+			// Flatten all student-identifiers from result
+			const matchedIDs = matchedStudents.flatMap((student) => {
+				const studentInfo = [
+					student["Student ID"]?.toString()?.toLowerCase(),
+					student["Student New ENR"]?.toLowerCase(),
+					student["EduLearn Application No"]?.toLowerCase(),
+					student["Student EduLearn ENR"]?.toLowerCase(),
+				];
+
+				const guardianInfo = student["Guardians"]?.flatMap((guardian) => [
+					guardian["Guardian ID"]?.toString()?.toLowerCase(),
+					guardian["Global No"]?.toLowerCase(),
+					guardian["Email"]?.toLowerCase(),
+					guardian["Mobile"]?.toLowerCase(),
+				]);
+
+				return {
+					studentInfo: studentInfo.filter(Boolean),
+					guardianInfo: guardianInfo?.filter(Boolean) || [],
+				};
+			});
+
+			// Flatten and extract all matched IDs for comparison
+			const allMatchedIDs = matchedIDs
+				.flatMap(({ studentInfo, guardianInfo }) => [
+					...studentInfo,
+					...guardianInfo,
+				])
+				.filter(Boolean);
+
+			// Find which input values didn't match any student or guardian
+			const unmatched = originalInputs.filter(
+				(input) => !allMatchedIDs.includes(input.toLowerCase())
+			);
+
+			setMissingItems(unmatched); // Store unmatched entries
 		} catch (error) {
 			alert(error.response?.data?.message || "An error occurred");
 			console.log(error);
