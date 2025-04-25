@@ -91,13 +91,56 @@ const StudentList = ({ students, missingItems }) => {
 		}));
 	};
 
+	const prepareGradeData = () => {
+		return students.map((student) => ({
+			"Student ID": student["Student ID"] || "",
+			"APPN NO.": student["EduLearn Application No"] || "",
+			"Edulearn ENR No.": student["Student EduLearn ENR"] || "",
+			"ENR No.": student["Student New ENR"] || "",
+			Board: student["Board Name"] || "",
+			Course: student["Course Name"] || "",
+			"Academic Year": student["AY YR"] === 25 ? "2024-25" : "2025-26",
+			Grade: student["Grade Name"] || "",
+			Stream: student["Stream Name"] || "",
+			Shift: student["Shift Name"] || "",
+			"School Name": student["School Name"] || "",
+		}));
+	};
+
+	const prepareBoardData = () => {
+		return students.map((student) => ({
+			"Student ID": student["Student ID"] || "",
+			"Academic Year": student["AY YR"] === 25 ? "2024-25" : "2025-26",
+			Schoolname: student["School Name"] || "",
+			"Student Name": `${student["Student First Name"] || ""} ${
+				student["Student Last Name"] || ""
+			}`.trim(),
+			"Application no": student["EduLearn Application No"] || "",
+			"Enrollment No": student["Student New ENR"] || "",
+			Board: student["Board Name"] || "",
+			Grade: student["Grade Name"] || "",
+		}));
+	};
+
 	const directDownload = async (type) => {
 		try {
 			setIsDownloading(type);
-			const exportData =
-				exportType === "credentials"
-					? prepareCredentialData()
-					: prepareAcademicData();
+			// const exportData =
+			// 	exportType === "credentials"
+			// 		? prepareCredentialData()
+			// 		: prepareAcademicData();
+
+			let exportData;
+
+			if (exportType === "credentials") {
+				exportData = prepareCredentialData();
+			} else if (exportType === "academic") {
+				exportData = prepareAcademicData();
+			} else if (exportType === "grade") {
+				exportData = prepareGradeData();
+			} else {
+				exportData = prepareBoardData();
+			}
 
 			const timestamp = new Date().toISOString().replace(/[:.-]/g, "_");
 			const prefix =
@@ -208,7 +251,7 @@ const StudentList = ({ students, missingItems }) => {
 
 					{showExportOptions && (
 						<div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-							<div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg relative">
+							<div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-xl relative">
 								{/* Close Button */}
 								<button
 									onClick={() => setShowExportOptions(false)}
@@ -222,7 +265,7 @@ const StudentList = ({ students, missingItems }) => {
 
 								<div className="flex flex-col gap-3 mb-4">
 									{/* Radio Buttons */}
-									<div className="flex gap-4">
+									<div className="flex gap-4 text-sm">
 										<label className="inline-flex items-center">
 											<input
 												type="radio"
@@ -242,6 +285,26 @@ const StudentList = ({ students, missingItems }) => {
 												className="form-radio h-5 w-5 text-blue-600"
 											/>
 											<span className="ml-2 text-gray-700">Academic Info</span>
+										</label>
+										<label className="inline-flex items-center">
+											<input
+												type="radio"
+												value="grade"
+												checked={exportType === "grade"}
+												onChange={() => setExportType("grade")}
+												className="form-radio h-5 w-5 text-blue-600"
+											/>
+											<span className="ml-2 text-gray-700">Grade Change</span>
+										</label>
+										<label className="inline-flex items-center">
+											<input
+												type="radio"
+												value="board"
+												checked={exportType === "board"}
+												onChange={() => setExportType("board")}
+												className="form-radio h-5 w-5 text-blue-600"
+											/>
+											<span className="ml-2 text-gray-700">Board Change</span>
 										</label>
 									</div>
 
