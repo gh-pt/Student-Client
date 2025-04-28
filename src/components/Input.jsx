@@ -5,7 +5,7 @@ import { AppState } from "../context/context";
 export default function Input() {
 	const [input, setInput] = useState("");
 	const [searchType, setSearchType] = useState("custom"); // Default to regex-based search
-	const { setStudents, setMissingItems } = AppState();
+	const { setStudents, setMissingItems, setLoading } = AppState();
 
 	// Regex patterns
 	const regexPatterns = {
@@ -83,6 +83,7 @@ export default function Input() {
 	// Modify getData to receive full input list
 	async function getData(inputObj, originalInputs = []) {
 		try {
+			setLoading(true);
 			const response = await axios.post(
 				`${import.meta.env.VITE_HOST_URL}/student/byENR`,
 				{ result: inputObj }
@@ -130,6 +131,8 @@ export default function Input() {
 		} catch (error) {
 			alert(error.response?.data?.message || "An error occurred");
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	}
 

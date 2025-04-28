@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import StudentCard from "./StudentCard";
 import axios from "axios";
+import StudentListShimmer from "./StudentListShimmer";
 
-const StudentList = ({ students, missingItems }) => {
+const StudentList = ({ students, missingItems, loading }) => {
 	const [selectedOption, setSelectedOption] = useState("studentID");
 	const [filteredData, setFilteredData] = useState([]);
 	const [copied, setCopied] = useState(false);
@@ -12,6 +13,11 @@ const StudentList = ({ students, missingItems }) => {
 	const [customFilename, setCustomFilename] = useState("");
 	const [showExportOptions, setShowExportOptions] = useState(false);
 	const [showExtracted, setShowExtracted] = useState(true);
+
+	// Show shimmer UI if loading is true
+	if (loading) {
+		return <StudentListShimmer />;
+	}
 
 	const handleSelection = (event) => {
 		setShowExtracted(true);
