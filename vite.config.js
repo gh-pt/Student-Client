@@ -10,6 +10,6 @@ export default defineConfig({
     port: 5173,
   },
   preview:{
-    allowedHosts: ['https://student-client.onrender.com/'] 
+    allowedHosts: ['student-client.onrender.com'] 
   }
 })
