@@ -8,5 +8,8 @@ export default defineConfig({
   server: {
     host: process.env.HOST_IP || '0.0.0.0',
     port: 5173,
+  },
+  preview:{
+    allowedHosts: ['https://student-client.onrender.com/'] 
   }
 })
