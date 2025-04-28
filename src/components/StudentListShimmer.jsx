@@ -6,7 +6,7 @@ const ShimmerEffect = ({ className }) => (
 );
 
 const StudentCardShimmer = () => (
-	<div className="w-full sm:w-[300px] border border-gray-200 rounded-lg p-4 shadow">
+	<div className="w-full sm:w-[500px] border border-gray-200 rounded-lg p-4 shadow">
 		{/* Header */}
 		<div className="flex justify-between items-center mb-3">
 			<ShimmerEffect className="h-6 w-3/4 rounded" />

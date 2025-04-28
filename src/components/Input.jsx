@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { AppState } from "../context/context";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Input() {
 	const [input, setInput] = useState("");
@@ -35,7 +36,7 @@ export default function Input() {
 			.map((item) => item.trim())
 			.filter(Boolean);
 		if (inputs.length === 0) {
-			alert("Please enter a valid input");
+			toast.error("Please enter a valid input");
 			return;
 		}
 
@@ -58,7 +59,7 @@ export default function Input() {
 			if (Object.keys(validInputs).length > 0) {
 				getData(validInputs, inputs); // Pass original input terms
 			} else {
-				alert("Invalid input");
+				toast.error("Invalid input");
 			}
 		} else {
 			// Direct search with Student ID, Guardian Global No, or Guardian ID (support multiple values)
@@ -129,7 +130,7 @@ export default function Input() {
 
 			setMissingItems(unmatched); // Store unmatched entries
 		} catch (error) {
-			alert(error.response?.data?.message || "An error occurred");
+			toast.error(error.response?.data?.message || "An error occurred");
 			console.log(error);
 		} finally {
 			setLoading(false);
@@ -138,6 +139,7 @@ export default function Input() {
 
 	return (
 		<div className="p-4">
+			<Toaster />
 			<h2 className="text-2xl font-bold mb-4">Search Student - Guardian</h2>
 			<form>
 				{/* Dropdown to select search type */}
