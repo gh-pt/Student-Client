@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RiClipboardLine } from "@remixicon/react";
 import { RiCheckboxCircleFill } from "@remixicon/react";
+import { Link } from "react-router";
 
 const StudentCard = ({ student }) => {
 	const [copiedField, setCopiedField] = useState(null);
@@ -43,6 +44,16 @@ const StudentCard = ({ student }) => {
 
 	const academicYear = student["AY YR"] === 25 ? "2024-25" : "2025-26";
 
+	const studentLink = `https://mdm-strapi.ampersandgroup.in/admin/content-manager/collection-types/api::ac-student.ac-student/`;
+	const guardianLink = `https://mdm-strapi.ampersandgroup.in/admin/content-manager/collection-types/api::ac-guardian.ac-guardian/`;
+	const yearlyDetailsLink = `https://mdm-strapi.ampersandgroup.in/admin/content-manager/collection-types/api::ac-student-yearly-detail.ac-student-yearly-detail/`;
+
+	const openLink = (url, params) => {
+		if (!url) return;
+		const fullLink = `${url}${params}`;
+		window.open(fullLink, "_blank", "noopener,noreferrer");
+	};
+
 	return (
 		<div className="w-full sm:max-w-[600px] mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
 			<div className="flex items-center justify-between mb-2">
@@ -50,8 +61,13 @@ const StudentCard = ({ student }) => {
 					{student["Student First Name"]} {student["Student Middle Name"]}{" "}
 					{student["Student Last Name"]}
 				</h2>
-				<h3 className="text-md font-semibold text-gray-800">
-					Student ID: {student["Student ID"]}
+				<h3 className="text-md font-semibold text-gray-800 flex items-center">
+					<p className="text-sm text-gray-700 mr-1">Student ID:</p>
+					<p
+						onClick={() => openLink(studentLink, student["Student ID"])}
+						className="text-blue-500 cursor-pointer">
+						{student["Student ID"]}
+					</p>
 					<button
 						className={`px-2 py-1 rounded-md text-white`}
 						onClick={() =>
@@ -70,6 +86,7 @@ const StudentCard = ({ student }) => {
 					</button>
 				</h3>
 			</div>
+
 			<div className="grid grid-cols-2 gap-x-5 gap-y-3 text-sm text-gray-700 my-6">
 				<p>
 					<strong>School:</strong> {student["School Name"]}
@@ -112,6 +129,14 @@ const StudentCard = ({ student }) => {
 						<strong>LC Type:</strong> {student["Lc Type"]}
 					</p>
 				)}
+			</div>
+
+			<div className="flex items-center justify-end">
+				<button
+					className="px-2 py-1 bg-blue-600 rounded-md"
+					onClick={() => openLink(yearlyDetailsLink, student["Student ID"])}>
+					Edit Yearly Details
+				</button>
 			</div>
 
 			<div className="flex sm:items-center justify-between flex-col sm:flex-row mt-2">
@@ -186,7 +211,13 @@ const StudentCard = ({ student }) => {
 							</h3>
 							<h4 className="text-md font-semibold">
 								<p className="text-sm text-gray-500">Guardian ID:</p>
-								{guardian["Guardian ID"]}{" "}
+								<p
+									onClick={() =>
+										openLink(guardianLink, guardian["Guardian ID"])
+									}
+									className="text-blue-500 cursor-pointer inline-block">
+									{guardian["Guardian ID"]}
+								</p>
 								<button
 									className={`px-2 py-1 rounded-md text-white`}
 									onClick={() =>
@@ -210,6 +241,25 @@ const StudentCard = ({ student }) => {
 							<h4 className="text-md font-semibold">
 								<p className="text-sm text-gray-500">Global No:</p>
 								{guardian["Global No"]}{" "}
+								<button
+									className={`px-1 py-1 rounded-md text-white`}
+									onClick={() =>
+										copyToClipboard(
+											guardian["Global No"],
+											`Global No - ${index}`
+										)
+									}>
+									{copiedField === `Global No - ${index}` ? (
+										<RiCheckboxCircleFill
+											className="text-black"
+											size={15}
+											color="green"></RiCheckboxCircleFill>
+									) : (
+										<RiClipboardLine
+											className="text-black"
+											size={15}></RiClipboardLine>
+									)}
+								</button>
 							</h4>
 						</div>
 						{["Mobile", "Email", "Password"].map((field, idx) => (
